@@ -47,7 +47,7 @@ supported_types:
     sql_type_name: numeric
 scalar_functions:
 - name: arithmetic.add
-  local_name: +
+  local_name: '+'
   infix: true
   required_options:
     overflow: SILENT
@@ -145,7 +145,7 @@ scalar_functions:
   - bool
   variadic: 0
 - name: boolean.and_not
-  local_name: and NOT
+  local_name: and not
   infix: true
   supported_kernels:
   - bool_bool
@@ -156,7 +156,7 @@ scalar_functions:
   - bool
   variadic: 0
 - name: boolean.xor
-  local_name: <>
+  local_name: '<>'
   infix: true
   supported_kernels:
   - bool_bool
@@ -165,13 +165,14 @@ scalar_functions:
   infix: false
   supported_kernels:
   - bool
+  variadic: 2
 - name: comparison.lt
-  local_name: <
+  local_name: '<'
   infix: true
   supported_kernels:
   - any1_any1
 - name: comparison.lte
-  local_name: <=
+  local_name: '<='
   infix: true
   supported_kernels:
   - any1_any1
@@ -196,20 +197,20 @@ scalar_functions:
   supported_kernels:
   - any1_any1
 - name: comparison.is_not_distinct_from
-  local_name: IS NOT DISTINCT FROM
+  local_name: is not distinct from
   infix: true
   supported_kernels:
   - any1_any1
 - name: comparison.is_null
-  local_name: IS NULL
+  local_name: is null
   postfix: true
   supported_kernels:
-  - any1
+  - any
 - name: comparison.is_not_null
-  local_name: IS NOT NULL
+  local_name: is not null
   postfix: true
   supported_kernels:
-  - any1
+  - any
 - name: comparison.nullif
   supported_kernels:
   - any1_any1
@@ -336,6 +337,38 @@ scalar_functions:
     on_domain_error: ERROR
   supported_kernels:
   - fp64_fp64
+- name: arithmetic.sign
+  local_name: sign
+  supported_kernels:
+  - fp32
+  - fp64
+- name: arithmetic_decimal.bitwise_and
+  local_name: bitand
+  supported_kernels:
+  - dec_dec
+- name: arithmetic_decimal.bitwise_or
+  local_name: bitor
+  supported_kernels:
+  - dec_dec
+- name: arithmetic_decimal.bitwise_xor
+  local_name: bitxor
+  supported_kernels:
+  - dec_dec
+- name: arithmetic_decimal.power
+  local_name: pow
+  required_options:
+    overflow: ERROR
+    complex_number_result: ERROR
+  supported_kernels:
+  - dec_dec
+- name: arithmetic_decimal.factorial
+  local_name: factorial
+  supported_kernels:
+  - dec
+- name: arithmetic_decimal.sqrt
+  local_name: sqrt
+  supported_kernels:
+  - dec
 aggregate_functions:
 - name: arithmetic.min
   aggregate: true
@@ -371,30 +404,13 @@ aggregate_functions:
   aggregate: true
   supported_kernels:
   - bool
-- name: arithmetic_decimal.bitwise_and
-  local_name: bitand
+- name: aggdec.count
+  local_name: COUNT
+  aggregate: true
   supported_kernels:
-    - dec_dec
-- name: arithmetic_decimal.bitwise_or
-  local_name: bitor
+  - any
+- name: aggdec.count
+  local_name: COUNT
+  aggregate: true
   supported_kernels:
-    - dec_dec
-- name: arithmetic_decimal.bitwise_xor
-  local_name: bitxor
-  supported_kernels:
-    - dec_dec
-- name: arithmetic_decimal.power
-  local_name: pow
-  required_options:
-    overflow: ERROR
-    complex_number_result: ERROR
-  supported_kernels:
-  - dec_dec
-- name: arithmetic_decimal.sqrt
-  local_name: sqrt
-  supported_kernels:
-    - dec
-- name: arithmetic_decimal.factorial
-  local_name: factorial
-  supported_kernels:
-    - dec
+  - ""
